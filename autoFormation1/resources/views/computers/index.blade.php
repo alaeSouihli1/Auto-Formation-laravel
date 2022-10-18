@@ -3,14 +3,26 @@
 @section('title','Computers')
 
 @section('content')
-    <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
-
-        <div class="flex justify-center pt-8 ">
+    <div>
+        <div >
             <h1>Computers </h1>
         </div>
 
-        <div class="mt-8 ">
-            THIS IS THE Computers PAGE
+
+        <div >
+            @if(count($computers)>0)
+                <ul>
+                    @foreach($computers as $computer)
+                    <a href="{{ route('computers.show',['computer' =>$computer['id']]) }}">
+                        <li>{{$computer['name']}} is from <b>{{$computer['origin']}}</b></li>
+                    </a>
+
+                    @endforeach
+                </ul>
+            @else
+                <p>there are no computers to display</p>
+            @endif
+
         </div>
 
     </div>

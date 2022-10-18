@@ -23,7 +23,7 @@ Route::get('/contact', [StaticController::class,'contact'] )->name('home.contact
 
 Route::resource('computers', ComputersController::class);
 
-
+ 
 
 // Route::get('/store', function () {
 //     $filter=request('style');
