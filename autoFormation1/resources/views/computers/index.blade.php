@@ -13,9 +13,9 @@
             @if(count($computers)>0)
                 <ul>
                     @foreach($computers as $computer)
-                    <a href="{{ route('computers.show',['computer' =>$computer['id']]) }}">
-                        <li>{{$computer['name']}} is from <b>{{$computer['origin']}}</b></li>
-                    </a>
+                        <a href="{{ route('computers.show',['computer' =>$computer['id']]) }}">
+                            <li>{{$computer['name']}} is from <b>{{$computer['origin']}}</b>{{$computer['price']}}</li>
+                        </a>
 
                     @endforeach
                 </ul>
