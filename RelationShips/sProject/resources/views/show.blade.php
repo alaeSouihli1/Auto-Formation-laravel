@@ -1,0 +1,11 @@
+<h1>Details</h1>
+<div>
+    <ul>
+        <li>
+            {{$post->id}}
+        </li>
+        <li>
+            {{$post->title}}
+        </li>
+    </ul>
+</div>
