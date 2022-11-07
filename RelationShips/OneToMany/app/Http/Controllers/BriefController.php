@@ -67,7 +67,34 @@ class BriefController extends Controller
         return redirect(route('briefs.index'));
         }
 
-        public function search(){
+        public function search(Request $request){
+            if($request->ajax()){
+                $output="";
+                $briefs=Brief::where('nom','LIKE','%'.$request->search."%")->get();
+                if($briefs){
+                    foreach($briefs as $brief){
+                        $output.='<tr>.
+                            <td>'.$brief->nom.'</td>
+                            <td>'.$brief->dateHeureLivraison.'</td>
+                            <td>'.$brief->dateHeureRecuperation.'</td>
+
+                            <td><a href="'.route('briefs.edit',$brief->id).'" >Modifier</a></td>
+                            <td><a href="">assignement</a>
+                            <td><a href="'.route('taches.create',$brief->id).'">+Tache</a>
+                            <td>
+                                <form action="'.route('briefs.destroy',$brief->id).'" method="POST">
+                                <input type="hidden" name="_token" value="YE0mBGjemSdxhMQPa9RQK2gUtb7bOW7TnGAqenTj">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input  type="submit" value="Supprimer" />
+                                </form>
+                            </td>
+                        </tr>';
+                     
+                    }
+                    return Response($output);
+    
+                }
+            }
 
         }
 }

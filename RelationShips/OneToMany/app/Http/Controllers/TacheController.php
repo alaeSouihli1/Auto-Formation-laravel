@@ -69,4 +69,33 @@ class TacheController extends Controller
         $toDelete->delete();
         return redirect(route('briefs.edit',$toDelete->id_brief));
     }
+
+    public function search2(Request $request){
+        $output="";
+        $id= $request->idBrief;
+        $taches=Tache::where([
+            ['id_brief','=',$id],
+            ['nom','Like',$request->search2.'%']
+        ])->get();
+        foreach($taches as $tache)
+        {
+            $output.=
+            '<tr>
+            <td> '.$tache->nom.' </td>
+            <td> '.$tache->description.' </td>
+            <td> '.$tache->dateFin.' </td>
+            <td> '.$tache->dateDebut.' </td>
+            <td><a href="'.route('taches.edit',$tache->id).'" >Modifier</a></td>
+            <td> <form action="'.route('taches.destroy',$tache->id).'" method="POST">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="_token" value="'.csrf_token().'">
+                <input  type="submit" value="Supprimer" />
+                </form>
+            </td>
+           
+            </tr>';
+        }
+        return response($output);
+    
+    }
 }

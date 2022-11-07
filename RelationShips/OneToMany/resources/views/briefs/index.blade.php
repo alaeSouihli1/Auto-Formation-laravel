@@ -11,28 +11,59 @@
     <a href="{{route('briefs.create')}}" >Ajouter Brief</a>
     <input type="text" id="search">
     <div>
-        @foreach($briefs as $brief)
         <table class="table">
-            <tr>
-                <td><a href="{{route('briefs.show',$brief->id)}}">{{$brief->nom}}</a></td>
-                <td><a href="{{route('briefs.show',$brief->id)}}">{{$brief->dateHeureLivraison}}</a></td>
-                <td><a href="{{route('briefs.show',$brief->id)}}">{{$brief->dateHeureRecuperation}}</a></td>
-                <td><a href="{{route('briefs.edit',$brief->id)}}">Modifier</a></td>
-                <td><a href="">Assigner</a></td>
-                <td><a href="{{route('taches.create',$brief->id)}}">+Tache</a></td>
+            <thead>
+                    <th>Nom</th>
+                    <th>Date/heure livraison</th>
+                    <th>Date/heure recuperation</th>
+                    <th>modifier</th>
+                    <th>Assigner</th>
+                    <th>+tache</th>
+                    <th>supprimmer</th>
+
+            </thead>
+
+            <tbody>
+            @foreach($briefs as $brief)
+
+                <tr>
+                    <td><a href="{{route('briefs.show',$brief->id)}}">{{$brief->nom}}</a></td>
+                    <td><a href="{{route('briefs.show',$brief->id)}}">{{$brief->dateHeureLivraison}}</a></td>
+                    <td><a href="{{route('briefs.show',$brief->id)}}">{{$brief->dateHeureRecuperation}}</a></td>
+                    <td><a href="{{route('briefs.edit',$brief->id)}}">Modifier</a></td>
+                    <td><a href="">Assigner</a></td>
+                    <td><a href="{{route('taches.create',$brief->id)}}">+Tache</a></td>
 
 
-                <td>
-                    <form action="{{route('briefs.destroy',$brief->id)}}" method="POST">
-                        @csrf
-                        @method('DELETE')
+                    <td>
+                        <form action="{{route('briefs.destroy',$brief->id)}}" method="POST">
+                            @csrf
+                            @method('DELETE')
 
-                        <input  type="submit" value="Supprimer" class="delete"/>
-                    </form>
-                </td>
-            </tr>
+                            <input  type="submit" value="Supprimer" class="delete"/>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+
+            </tbody>
+
+           
         </table> 
-        @endforeach
     </div>   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script type="text/javascript">
+        $('#search').on('keyup',function(){
+            $value=$(this).val();
+        $.ajax({
+            type:'get',
+            url:'{{URL::to('search')}}',
+            data:{'search':$value},
+            success:function(data){
+                $('tbody').html(data);
+            }
+        })
+        })
+    </script>
 </body>
 </html>

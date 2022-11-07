@@ -8,13 +8,12 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="" method="post">
+    <form action="{{route('briefs.store')}}" method="post">
         @csrf
         <input type="text" placeholder="nom..." name="nom">
       
         <input type="datetime-local"  name="dateHeureLivraison">
         <input type="datetime-local"  name="dateHeureRecuperation">
-        <input type="hidden"  name="id_brief" value="{{$id_brief}}">
 
         <button>Ajouter</button>
     </form>

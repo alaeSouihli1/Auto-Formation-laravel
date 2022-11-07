@@ -20,26 +20,74 @@
     </form>
     <div>
         <a href="{{route('taches.create',$brief->id)}}">Ajouter tache</a>
-        @foreach($taches as $tache)
+        <input type="text" id="search">
 
-        <table class="table">
-            <tr>
-                <td>{{$tache->nom}}</td>
-                <td>{{$tache->description}}</td>
-                <td>{{$tache->dateDebut}}</td>
-                <td>{{$tache->dateFin}}</td>
-                <td><a href="{{route('taches.edit',$tache->id)}}">Modifier</a></td>
-                <td>
-                    <form action="{{route('taches.destroy',$tache->id)}}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <input  type="submit" value="Supprimer" class="delete"/>                    
-                    </form>
-                </td>
-               
-            </tr>
+
+        <table class="table" >
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Description</th>
+                    <th>Date debut</th>
+                    <th>Date fin</th>
+                    <th>Modifier</th>
+                    <th>Supprimer</th>
+
+
+                </tr>
+            </thead>
+            <tbody id="table1" class="table1">
+             @foreach($taches as $tache)
+                <tr>
+                    <td>{{$tache->nom}}</td>
+                    <td>{{$tache->description}}</td>
+                    <td>{{$tache->dateDebut}}</td>
+                    <td>{{$tache->dateFin}}</td>
+                    <input type="hidden" value="{{$tache->id_brief}}" id="idB" >
+                    <td><a href="{{route('taches.edit',$tache->id)}}">Modifier</a></td>
+                    <td>
+                        <form action="{{route('taches.destroy',$tache->id)}}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <input  type="submit" value="Supprimer" class="delete"/>                    
+                        </form>
+                    </td>
+                
+                </tr>
+              @endforeach
+            </tbody>
+            <tbody  id="table2"  class="table2">
+
+            </tbody>
         </table>
-        @endforeach
     </div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+    <script type="text/javascript">
+            $('#search').on('keyup',function(){
+                $value=$(this).val();
+                $idBrief=$('#idB').val();
+                if($value){
+                    $('.table1').hide();
+                    $('.table2').show();
+                }else{
+                    
+                    $('.table2').hide();
+                    $('.table1').show();
+                }
+                $.ajax({
+                    type:'get',
+                    url:'{{URL::to("search2")}}',
+                    data:{'search2':$value,
+                        'idBrief':$idBrief},
+                    success:function(data){
+                        console.log(data);
+                        $('#table2').html(data);
+                    }
+                });
+            })
+            </script>
+
 </body>
 </html>

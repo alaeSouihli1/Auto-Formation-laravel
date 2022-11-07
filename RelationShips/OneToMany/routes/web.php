@@ -23,5 +23,8 @@ Route::get('/', function () {
 Route::resource('briefs',BriefController::class);
 Route::resource('taches',TacheController::class);
 Route::get('taches/create/{id}',[TacheController::class,'create'])->name('taches.create');
+Route::get('search',[BriefController::class,'search']);
+Route::get('search2',[TacheController::class,'search2']);
+
 
 
