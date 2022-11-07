@@ -13,16 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('details', function (Blueprint $table) {
+        Schema::create('apprenants', function (Blueprint $table) {
             $table->id();
-            $table->string('description');
-            $table->string('title');
-            //define foreign key
-            $table->foreignId('post_id');
-            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
-
-
-
+            $table->string('Name')->nullable();
+            $table->string('Prenom')->nullable();
+            $table->string('Email')->nullable();
+            $table->string('promotion_id')->nullable();
             $table->timestamps();
         });
     }
@@ -34,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('details');
+        Schema::dropIfExists('apprenants');
     }
 };
